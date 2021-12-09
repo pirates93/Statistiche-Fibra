@@ -1,0 +1,182 @@
+id: statistiche
+type: custom:config-template-card
+align_state: center
+show:
+  extrema: true
+  labels: true
+  points: true
+entities:
+  - sensor.sensor.speedtest_download
+  - sensor.sensor.speedtest_upload
+  - sensor.sensor.speedtest_ping
+card:
+  type: entities
+  style: |
+    .card-header {
+      padding: 0px 0px 0px 0px !important;
+    }
+  entities:
+    - type: section
+      label: ${ 'Statistiche Modem Tim Hub ' }
+    - type: custom:hui-vertical-stack-card
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: picture
+              style: |
+                ha-card { 
+                    --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
+                    --ha-card-background: "rgba(0, 0, 0, 0.0)";
+                    --ha-card-box-shadow: 'none';
+                }
+              image: /local/TimHub.png
+            - type: custom:button-card
+              layout: icon_name_state2nd
+              show_icon: true
+              show_state: true
+              styles:
+                grid:
+                  - grid-template-columns: 50px auto
+                icon:
+                  - padding: 0px 0px
+                  - height: 30px
+                  - width: 30px
+                card:
+                  - '--ha-card-background': rgba(0, 0, 0, 0.0)
+                  - '--ha-card-box-shadow': none
+                state:
+                  - padding: 0px 10px
+                  - justify-self: start
+                  - font-family: Roboto, sans-serif
+                  - font-size: 15px
+                name:
+                  - padding: 0px 10px
+                  - justify-self: start
+                  - color: var(--primary-text-color)
+              entity: sensor.speedtest_download
+              name: Online
+              icon: mdi:clock-outline
+        - type: custom:bar-card
+          show_icon: true
+          align: split
+          columns: 1
+          max: 1000
+          positions:
+            icon: inside
+            indicator: inside
+            name: inside
+            value: inside
+          unit_of_measurement: ''
+          severity:
+            - color: '#1e90ff'
+              from: 0
+              to: 49
+            - color: orange
+              from: 50
+              to: 80
+            - color: red
+              from: 81
+              to: 100
+          style: |
+            ha-card { 
+                --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
+                --ha-card-background: "rgba(0, 0, 0, 0.0)";
+                --paper-item-icon-color: 'var(--text-primary-color';
+                --ha-card-box-shadow: 'none';
+            }
+          entities:
+            - entity: sensor.speedtest_download
+          name: ${ 'Download' }
+          entity_row: true
+        - type: horizontal-stack
+          cards:
+            - type: custom:bar-card
+              show_icon: true
+              align: split
+              columns: 1
+              max: 200
+              positions:
+                icon: inside
+                indicator: inside
+                name: inside
+                value: inside
+              unit_of_measurement: ''
+              severity:
+                - color: '#1e90ff'
+                  from: 0
+                  to: 49
+                - color: Orange
+                  from: 50
+                  to: 80
+                - color: red
+                  from: 81
+                  to: 100
+              style: |
+                ha-card { 
+                  --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
+                  --ha-card-background: "rgba(0, 0, 0, 0.0)";
+                  --paper-item-icon-color: 'var(--text-primary-color';
+                  --ha-card-box-shadow: 'none';
+                }
+              entity: sensor.speedtest_upload
+              name: Upload
+              entity_row: true
+            - type: custom:bar-card
+              show_icon: true
+              align: split
+              columns: 1
+              max: 10
+              positions:
+                icon: inside
+                indicator: inside
+                name: inside
+                value: inside
+              unit_of_measurement: ''
+              severity:
+                - color: '#1e90ff'
+                  from: 0
+                  to: 49
+                - color: Orange
+                  from: 50
+                  to: 80
+                - color: red
+                  from: 81
+                  to: 100
+              style: |
+                ha-card { 
+                  --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
+                  --ha-card-background: "rgba(0, 0, 0, 0.0)";
+                  --paper-item-icon-color: 'var(--text-primary-color';
+                  --ha-card-box-shadow: 'none';
+                }
+              entity: sensor.speedtest_ping
+              name: Ping
+              entity_row: true
+        - type: custom:mini-graph-card
+          height: 50
+          line_width: 3
+          font_size: 70
+          hours_to_show: 48
+          points_per_hour: 1
+          show:
+            extrema: true
+            fill: true
+          style: |
+            ha-card { 
+              --ha-card-background: "rgba(0, 0, 0, 0.0)";
+              --ha-card-box-shadow: 'none';
+              border-radius: 6px;
+            }
+            .info.flex {
+              font-size: 12px !important;
+            }
+          entities:
+            - sensor.speedtest_download
+          name: Velocità Modem Tim
+          color_thresholds:
+            - value: 30
+              color: '#1e90ff'
+            - value: 60
+              color: '#ff4500'
+            - value: 80
+              color: "#ff0000\t"
